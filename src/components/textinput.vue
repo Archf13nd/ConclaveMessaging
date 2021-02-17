@@ -51,7 +51,8 @@ export default {
   background: rgb(193, 216, 157);
   width: 80px;
   height: 40px;
-                    border: 3px solid black;
+                  
+                     border: 3px solid black;
 }
 
 .evil {
