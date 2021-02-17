@@ -13,14 +13,14 @@
 </template>
 
 <script>
-export default {
+  export default {
   methods: {
     logout() {
       this.$store.dispatch("auth/logout");
     }
   },
-  computed: {
-    checkPath() {
+          computed: {
+              checkPath() {
       return this.$route.path === "/home" ? true : false;
     },
     isLoggedIn() {

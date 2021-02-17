@@ -57,4 +57,8 @@ export default {
 .evil {
                                             display: flex;
 }
+
+.haha {
+              color: #000
+}
 </style>
