@@ -54,8 +54,12 @@ export default {
         
         
         console.log(e.target.closest(".container").id === userId);
+        
+        
         // console.log(userId)
+        
         if (e.target.closest(".container").id === userId) {this.isUserMessage = true;
+        console.log('ha')
         }
       });
     }
