@@ -8,11 +8,6 @@
     "lint": "vue-cli-service lint",
     "precommit": "pretty-quick --staged"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "dependencies": {
     "autoprefixer": "^9",
     "core-js": "^3.6.5",
@@ -37,5 +32,10 @@
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",
     "sass-loader": "^8.0.2"
-  }
+  },
+    "husky": {
+      "hooks": {
+        "pre-commit": "pretty-quick --staged"
+      }
+    }
 }
