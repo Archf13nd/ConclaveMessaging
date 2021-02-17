@@ -6,11 +6,11 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "pre-commit": "echo 'Hahaha'"
+    "pretty-quick": "prettier"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'Hahahahaha muhahahah"
+      "pre-commit": "prettier"
     }
   },
   "dependencies": {
