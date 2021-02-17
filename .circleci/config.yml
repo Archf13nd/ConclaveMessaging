@@ -12,7 +12,9 @@ jobs:
   test:
     docker:
       - image: alpine:3.7
-    steps: echo 'Testing'
+    steps:
+      - checkout
+      - echo 'Muhahahaha'
 workflows:
   node-tests:
     jobs:
