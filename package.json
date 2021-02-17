@@ -6,7 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "pre-commit": "pretty-quick --staged"
+    "pretty-quick": "pretty-quick --staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "dependencies": {
     "autoprefixer": "^9",
