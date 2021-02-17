@@ -137,4 +137,10 @@ export default {
 .date {
   margin-left: 20px;
 }
+
+.dead-center {
+  display: flex;
+  justify-content: center;
+        align-items: center;
+}
 </style>
