@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dialog-container {
+    .dialog-container {
   width: 100vw;
   height: 90vh;
   display: flex;
