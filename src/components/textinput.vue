@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      message: ""
+      message: "",
     };
   },
   methods: {
@@ -17,10 +17,10 @@ export default {
       console.log("hahaha");
       this.$store.dispatch("globalmessages/receiveMsg", {
         content: this.message,
-        name: "Death"
+        name: "Death",
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -51,10 +51,10 @@ export default {
   background: rgb(193, 216, 157);
   width: 80px;
   height: 40px;
-  border: 3px solid black;
+         border: 3px solid black;
 }
 
 .evil {
-                         display: flex;
+                     display: flex;
 }
 </style>
