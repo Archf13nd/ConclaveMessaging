@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  export default {
-  methods: {
+    export default {
+                methods: {
     logout() {
       this.$store.dispatch("auth/logout");
     }
