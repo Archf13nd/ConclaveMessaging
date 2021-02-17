@@ -151,6 +151,7 @@ export default {
         const error = new Error(response);
         throw error;
       }
+            console.log('haha')
     }
 
     localStorage.removeItem("conclave");
