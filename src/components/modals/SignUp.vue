@@ -21,7 +21,7 @@
         <div
           class="image"
           :style="{ background: `url(${theUrl})` }"
-          style="background-size:100% 100%;background-repeat:no-repeat;"
+          style="background-size: 100% 100%; background-repeat: no-repeat"
         ></div>
         <div class="input-field">
           <label for="email">Please fill out your email:</label>
@@ -64,7 +64,7 @@ export default {
       name: "",
       theUrl: background,
       email: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
@@ -74,7 +74,7 @@ export default {
           name: this.name,
           url: this.theUrl,
           email: this.email,
-          password: this.password
+          password: this.password,
         });
         localStorage.setItem("conclave", null);
         this.$router.replace("/home");
@@ -82,11 +82,11 @@ export default {
         const error = err || "An error in signup";
         throw error;
       }
-    }
+    },
   },
   created() {
     this.theUrl = this.url;
-  }
+  },
 };
 </script>
 

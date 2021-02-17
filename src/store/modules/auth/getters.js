@@ -1,15 +1,12 @@
 export default {
-  // Checks if user is logged in. Used for dynamic UI elements
-  isAuthenticated(state) {
-    return !!state.token;
+  isValidSession(state) {
+    return !!state.isValidSession;
   },
-  // Gets the id of the user if logged in
-  getUserId(state) {
-    return state.userId;
-  },
-
-  checkUser() {
-    console.log("haaa");
-    return !!localStorage.getItem("conclave");
+  getUserDetails(state) {
+    return {
+      username: state.username,
+      avatar: state.avatar,
+      userId: state.userId,
+    };
   },
 };

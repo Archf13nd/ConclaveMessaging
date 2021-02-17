@@ -1,15 +1,16 @@
-// Color manager;
+/* Color manager */
+
 $color-header: rgba(20, 51, 190, 0);
 $color-side: #c4c4c4;
-$color-body:  #2024201f; 
+$color-body: #2024201f;
 
-// Font manager
+/* Font manager */
 $font-size-message: 20px;
 
-// Layout
+/* Layout */
 $header-height: 50px;
 $body-height: calc(100vh - 50px);
 
-// Forms
+/* Forms */
 $input-height: 30px;
 $input-width: 80%;

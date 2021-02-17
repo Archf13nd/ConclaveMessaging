@@ -1,14 +1,7 @@
 export default {
-  setUser(state, payload) {
-    state.userId = payload.userId;
-    state.token = payload.token;
-    state.expirationDate = payload.expirationDate;
-    console.log(state);
+  storeUser(state, { username, avatar, userId }) {
+    state.username = username;
+    state.avatar = avatar;
+    state.userId = userId;
   },
-  login(state) {
-    state.isLoggedIn = true;
-  },
-  logout(state) {
-    state.token = null;
-  }
 };

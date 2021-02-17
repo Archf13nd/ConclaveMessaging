@@ -1,73 +1,57 @@
 const FIREBASE_URL = process.env.VUE_APP_FIREBASE_URL;
-import { v4 as uuidv4 } from "uuid";
 console.log(process.env.VUE_APP_FIREBASE_URL, "env");
 
 export default {
   // Code that sends a message object to firebase
-  async receiveMsg(context, payload) {
-    // Creates date string
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    const minutes =
-      +currentDate.getMinutes() > 9
-        ? currentDate.getMinutes()
-        : `0${currentDate.getMinutes()}`;
-    const hour =
-      +currentDate.getHours() > 9
-        ? currentDate.getHours()
-        : `0${currentDate.getHours()}`;
-    const dateString = `${day}/${month}/${year} - ${hour}:${minutes}`;
+  async sendMessage(context, { messageContent }) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Get user details
+      const { username, avatar, userId } = context.rootGetters[
+        "auth/getUserDetails"
+      ];
 
-    const isLoggedIn = context.rootGetters["auth/isLoggedIn"];
-    let userId;
-    if (isLoggedIn) {
-      userId = context.rootGetters["auth/getUserId"];
-    } else {
-      userId = localStorage.getItem("localId");
+      // Send message as signed up user
+      const messageObject = {
+        username: username,
+        avatar: avatar,
+        userId: userId,
+        date: Date.now,
+        content: messageContent,
+      };
+
+      const response = await fetch(
+        `${FIREBASE_URL}globalmessages.json?auth=${token}`,
+        {
+          method: "POST",
+          body: JSON.stringify(messageObject),
+        }
+      );
+      //todo handle error message
+      if (!response.ok) {
+        const error = new Error(response);
+        throw error;
+      }
+      // const responseData = await response.json();
+      context.dispatch("fetchMessages");
     }
-    console.log(day, "What?");
-    console.log(userId);
-    const messageObject = {
-      userid: userId,
-      msgId: uuidv4(),
-      name: JSON.parse(localStorage.getItem("conclave"))["name"],
-      content: payload.content,
-      img: JSON.parse(localStorage.getItem("conclave"))["url"],
-      date: dateString,
-    };
-
-    const response = await fetch(`${FIREBASE_URL}globalmessages.json`, {
-      method: "POST",
-      body: JSON.stringify(messageObject),
-    });
-    //todo handle error message
-    if (!response.ok) {
-      console.log("AN ERROR globalmessages/actions", response);
-    }
-
-    const responseData = await response.json();
-    console.log(responseData);
-
-    context.dispatch("returnMsg");
   },
-  async returnMsg(context) {
+  async fetchMessages(context) {
     const response = await fetch(`${FIREBASE_URL}globalmessages.json`);
     if (!response.ok) {
-      console.log("AN ERROR globalmessages/actions/RM");
+      const error = new Error(response);
+      throw error;
     }
-    const values = await response.json();
-    const messages = [];
+    const messages = await response.json();
+    const arrayOfMessages = [];
 
-    for (const key in values) {
-      messages.push({
-        userId: values[key].userid,
-        msgId: values[key].msgId,
-        name: values[key].name,
-        content: values[key].content,
-        img: values[key].img,
-        date: values[key].date,
+    for (const key in messages) {
+      arrayOfMessages.push({
+        name: messages[key].username,
+        img: messages[key].avatar,
+        userId: messages[key].userId,
+        date: messages[key].date,
+        content: messages[key].content,
       });
     }
 

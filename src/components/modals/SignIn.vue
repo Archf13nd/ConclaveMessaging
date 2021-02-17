@@ -34,17 +34,17 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   },
   methods: {
     async submitForm() {
       await this.$store.dispatch("auth/login", {
         email: this.email,
-        password: this.password
+        password: this.password,
       });
       this.$router.replace("/home");
-    }
-  }
+    },
+  },
 };
 </script>

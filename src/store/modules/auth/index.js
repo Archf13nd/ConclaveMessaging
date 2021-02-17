@@ -6,14 +6,13 @@ export default {
   namespaced: true,
   state() {
     return {
-      isLoggedIn: false,
+      isValidSession: null,
+      username: null,
+      avater: null, //Store default avatar here
       userId: null,
-      death: 'true',
-      token: null,
-      expirationDate: null
     };
   },
   actions,
   mutations,
-  getters
+  getters,
 };

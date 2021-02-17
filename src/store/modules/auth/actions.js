@@ -22,12 +22,13 @@ export default {
   },
 
   // Auth function. Responsible for handling login or signup actions.
-  async auth(context, payload) {
-    const mode = payload.mode;
+  async auth(context, { mode, username, avatar, email, password }) {
+    // Runs if check for whether request is login or signup
     // URL FOR Logging in
     let url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
       API_KEY;
+
     // URL for signing up
     if (mode === "signup") {
       url =
@@ -39,8 +40,8 @@ export default {
     const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify({
-        email: payload.email,
-        password: payload.password,
+        email: email,
+        password: password,
         returnSecureToken: true,
       }),
     });
@@ -54,34 +55,45 @@ export default {
 
     // Get response data. Will contain localID(userID) and secure idToken
     const responseData = await response.json();
+
     // Store secure token in local Storage
     localStorage.setItem("token", responseData.idToken);
+    // Set expiration time in local storage
+    localStorage.setItem("expirationDate", responseData.expiresIn);
 
     // If mode is signup then there will be two more properties in payload. name and url. This dispatches the changeUserDetails action that handles these user details.
     if (mode === "signup") {
-      await context.dispatch("changeUserDetails", {
-        userId: responseData.localId,
-        name: payload.name,
-        url: payload.url,
+      await context.dispatch("updateUserProfile", {
+        username: username,
+        avatar: avatar,
       });
+    } else {
+      context.dispatch("fetchUserDetails");
     }
-    await context.dispatch("getUser", {
-      userId: responseData.localId,
-    });
-
-    // Mutation that sets the isLoggedIn property to true
-    context.commit("login");
-
-    // Mutation that sets the userId, token, and expirationDate to state.
-    context.commit("setUser", {
-      userId: responseData.localId,
-      token: responseData.idToken,
-      expirationDate: responseData.expiresIn,
-    });
   },
 
+  // Fetches user data from their account
+  async fetchUserDetails(context) {
+    const response = await fetch(
+      `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`,
+      {
+        method: "GET",
+        body: { idToken: localStorage.getItem("token") },
+      }
+    );
+    if (!response.ok) {
+      const error = new Error("Error");
+      throw error;
+    }
+    const responseData = await response.json();
+    context.commit("storeUser", {
+      username: responseData.displayName,
+      avatar: responseData.photoUrl,
+      userId: responseData.localId,
+    });
+  },
   // Changes user details. Used on signup to add details or later on to change details if user is loggedIn.
-  async changeUserDetails(context, payload) {
+  async updateUserProfile(context, { username, avatar }) {
     const response = await fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:update?key=" +
         API_KEY,
@@ -89,53 +101,29 @@ export default {
         method: "POST",
         body: JSON.stringify({
           idToken: localStorage.getItem("token"),
-          displayName: payload.name,
-          photoUrl: payload.url,
+          username: username,
+          avatar: avatar,
         }),
       }
     );
 
     if (!response.ok) {
-      console.log("response", response);
       const error = new Error("Error");
       throw error;
     }
 
     const responseData = await response.json();
-    console.log(responseData);
 
-    context.dispatch("getUser", {
+    context.commit("storeUser", {
+      username: responseData.displayName,
+      avatar: responseData.photoUrl,
       userId: responseData.localId,
     });
   },
-
-  // Grabs user - Payload needs localId
-  async getUser(context, payload) {
-    const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=" +
-        API_KEY,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          idToken: localStorage.getItem("token"),
-        }),
-      }
-    );
-    const responseData = await response.json();
-    localStorage.setItem(
-      "conclave",
-      JSON.stringify({
-        userId: payload.userId,
-        name: responseData.users[0].displayName,
-        url: responseData.users[0].photoUrl,
-      })
-    );
-  },
   async deleteAccount(context) {
-    const isLoggedIn = context.getters["isLoggedIn"];
-    if (isLoggedIn) {
+    const isValidSession = context.getters["isValidSession"];
+    if (isValidSession) {
       const token = localStorage.getItem("token");
-      console.log(token);
 
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:delete?key=" +
@@ -151,11 +139,8 @@ export default {
         const error = new Error(response);
         throw error;
       }
-      console.log("haha");
     }
-
-    localStorage.removeItem("conclave");
-    localStorage.removeItem("localId");
     localStorage.removeItem("token");
+    localStorage.removeItem("expirationDate");
   },
 };

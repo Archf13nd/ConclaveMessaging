@@ -6,10 +6,13 @@ export default {
   namespaced: true,
   state() {
     return {
-      messages: []
+      messages: [],
+      username: "",
+      avatar: null,
+      userId: null,
     };
   },
   actions,
   mutations,
-  getters
+  getters,
 };

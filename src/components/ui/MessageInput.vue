@@ -15,9 +15,8 @@ export default {
   methods: {
     sendMessage() {
       console.log("hahaha");
-      this.$store.dispatch("globalmessages/receiveMsg", {
-        content: this.message,
-        name: "Death",
+      this.$store.dispatch("globalmessages/sendMessage", {
+        messageContent: this.messageContent,
       });
     },
   },
@@ -60,7 +59,6 @@ export default {
 }
 
 .haha {
-                   
-                            color: #000;
+  color: #000;
 }
 </style>
