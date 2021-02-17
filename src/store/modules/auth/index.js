@@ -8,6 +8,7 @@ export default {
     return {
       isLoggedIn: false,
       userId: null,
+      death: 'true',
       token: null,
       expirationDate: null
     };
