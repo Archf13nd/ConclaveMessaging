@@ -47,8 +47,8 @@ export default {
 
     for (const key in messages) {
       arrayOfMessages.push({
-        name: messages[key].username,
-        img: messages[key].avatar,
+        username: messages[key].username,
+        avatar: messages[key].avatar,
         userId: messages[key].userId,
         date: messages[key].date,
         content: messages[key].content,

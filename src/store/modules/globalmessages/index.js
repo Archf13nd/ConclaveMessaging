@@ -7,9 +7,6 @@ export default {
   state() {
     return {
       messages: [],
-      username: "",
-      avatar: null,
-      userId: null,
     };
   },
   actions,

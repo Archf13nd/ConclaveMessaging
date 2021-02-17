@@ -32,6 +32,9 @@ export default {
 
 <style scoped>
 header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
   height: 50px;
   background: #000;
   display: flex;

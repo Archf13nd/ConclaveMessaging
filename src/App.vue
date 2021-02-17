@@ -27,6 +27,7 @@ export default {
 
 html {
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
 body {

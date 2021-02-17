@@ -13,7 +13,7 @@
 import MessageBody from "./MessageBody.vue";
 import Avatar from "./Avatar.vue";
 export default {
-  props: ["username", "avatar", "date", "messageContents", "userId"],
+  props: ["username", "avatar", "date", "messageContents"],
   components: {
     MessageBody,
     Avatar,

@@ -9,7 +9,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", redirect: "/home" },
-    { path: "/home", component: Home, meta: { requiresAuth: true } },
+    { path: "/home", component: Home, meta: { requiresAuth: false } },
     {
       path: "/settings",
       component: Settings,
