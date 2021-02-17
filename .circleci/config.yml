@@ -7,14 +7,15 @@ jobs:
       - image: alpine:3.7
     steps:
       - checkout
-      - npm run install
-      - npm run build
+      - run: npm install
+      - run: npm build
   test:
     docker:
       - image: alpine:3.7
     steps:
       - checkout
-      - echo 'Muhahahaha'
+      - run: npm install
+      - run: echo "Muhahahaha"
 workflows:
   node-tests:
     jobs:
