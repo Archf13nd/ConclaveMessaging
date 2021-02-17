@@ -50,6 +50,9 @@ export default {
         } else {
           userId = localStorage.getItem("localId");
         }
+        
+        
+        
         console.log(e.target.closest(".container").id === userId);
         // console.log(userId)
         if (e.target.closest(".container").id === userId) {this.isUserMessage = true;
