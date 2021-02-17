@@ -17,7 +17,7 @@
       <div
         class="image"
         :style="{ background: `url(${url})` }"
-        style="background-size:cover;background-repeat:no-repeat;"
+        style="background-size: cover; background-repeat: no-repeat"
       ></div>
 
       <div class="buttons">
@@ -39,7 +39,7 @@ export default {
     return {
       name: "",
       defaultImg: true,
-      url: background
+      url: background,
     };
   },
   methods: {
@@ -53,13 +53,13 @@ export default {
       );
       localStorage.setItem("localId", uuidv4());
       this.$emit("signedIn");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-    .dialog-container {
+.dialog-container {
   width: 100vw;
   height: 90vh;
   display: flex;

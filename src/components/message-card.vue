@@ -3,7 +3,7 @@
     <div
       class="msg-image"
       :style="{ background: `url(${img})` }"
-      style="background-size:100% 100%;background-repeat:no-repeat;"
+      style="background-size: 100% 100%; background-repeat: no-repeat"
     ></div>
     <div class="message-contents-container">
       <div class="msg-info">
@@ -28,7 +28,7 @@ export default {
   props: ["userId", "msgId", "name", "content", "img", "date"],
   data() {
     return {
-      isUserMessage: false
+      isUserMessage: false,
     };
   },
   methods: {
@@ -36,13 +36,12 @@ export default {
       const msgId = e.target.closest(".container").getAttribute("msgid");
       console.log(msgId);
       this.$store.dispatch("globalmessages/deleteMessage", {
-        messageId: msgId
+        messageId: msgId,
       });
     },
 
-
-                                    addEventListener() {
-      this.$refs.messageCard.addEventListener("mouseover", e => {
+    addEventListener() {
+      this.$refs.messageCard.addEventListener("mouseover", (e) => {
         const isLoggedIn = this.$store.getters["auth/isLoggedIn"];
         let userId;
         if (isLoggedIn) {
@@ -50,23 +49,21 @@ export default {
         } else {
           userId = localStorage.getItem("localId");
         }
-        
-        
-        
+
         console.log(e.target.closest(".container").id === userId);
-        
-        
+
         // console.log(userId)
-        
-        if (e.target.closest(".container").id === userId) {this.isUserMessage = true;
-        console.log('ha')
+
+        if (e.target.closest(".container").id === userId) {
+          this.isUserMessage = true;
+          console.log("ha");
         }
       });
-    }
+    },
   },
   mounted() {
     this.addEventListener();
-  }
+  },
 };
 </script>
 
@@ -149,6 +146,6 @@ export default {
 .dead-center {
   display: flex;
   justify-content: center;
-        align-items: center;
+  align-items: center;
 }
 </style>

@@ -6,16 +6,9 @@ export default {
   // Gets the id of the user if logged in
   getUserId(state) {
     return state.userId;
-  },  
-
-
-
-
-  
-
-
+  },
 
   checkUser() {
     return !!localStorage.getItem("conclave");
-  }
+  },
 };

@@ -40,7 +40,7 @@ export default {
   border-radius: 10px;
 }
 
-  .input {
+.input {
   display: inline-block;
   width: 100%;
   height: 40px;
@@ -51,15 +51,16 @@ export default {
   background: rgb(193, 216, 157);
   width: 80px;
   height: 40px;
-                  
-                     border: 3px solid black;
+
+  border: 3px solid black;
 }
 
 .evil {
-                                            display: flex;
+  display: flex;
 }
 
 .haha {
-              color: #000
+                   
+                            color: #000;
 }
 </style>

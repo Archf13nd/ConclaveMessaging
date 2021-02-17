@@ -1,18 +1,18 @@
-const API_KEY = process.env.VUE_APP_API_KEY
+const API_KEY = process.env.VUE_APP_API_KEY;
 
 export default {
   // Login Function - Takes in email and password as payload. Dispatches Auth action with payload.
   async login(context, payload) {
     context.dispatch("auth", {
       ...payload,
-      mode: "login"
+      mode: "login",
     });
   },
   // Signup function - takes in name, url, email, and password as payload. Dispatchees Auth action with payload
   async signup(context, payload) {
     context.dispatch("auth", {
       ...payload,
-      mode: "signup"
+      mode: "signup",
     });
   },
   // Logs user out
@@ -41,8 +41,8 @@ export default {
       body: JSON.stringify({
         email: payload.email,
         password: payload.password,
-        returnSecureToken: true
-      })
+        returnSecureToken: true,
+      }),
     });
 
     // Error handling
@@ -62,11 +62,11 @@ export default {
       await context.dispatch("changeUserDetails", {
         userId: responseData.localId,
         name: payload.name,
-        url: payload.url
+        url: payload.url,
       });
     }
     await context.dispatch("getUser", {
-      userId: responseData.localId
+      userId: responseData.localId,
     });
 
     // Mutation that sets the isLoggedIn property to true
@@ -76,7 +76,7 @@ export default {
     context.commit("setUser", {
       userId: responseData.localId,
       token: responseData.idToken,
-      expirationDate: responseData.expiresIn
+      expirationDate: responseData.expiresIn,
     });
   },
 
@@ -90,8 +90,8 @@ export default {
         body: JSON.stringify({
           idToken: localStorage.getItem("token"),
           displayName: payload.name,
-          photoUrl: payload.url
-        })
+          photoUrl: payload.url,
+        }),
       }
     );
 
@@ -105,7 +105,7 @@ export default {
     console.log(responseData);
 
     context.dispatch("getUser", {
-      userId: responseData.localId
+      userId: responseData.localId,
     });
   },
 
@@ -117,8 +117,8 @@ export default {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: localStorage.getItem("token")
-        })
+          idToken: localStorage.getItem("token"),
+        }),
       }
     );
     const responseData = await response.json();
@@ -127,7 +127,7 @@ export default {
       JSON.stringify({
         userId: payload.userId,
         name: responseData.users[0].displayName,
-        url: responseData.users[0].photoUrl
+        url: responseData.users[0].photoUrl,
       })
     );
   },
@@ -142,7 +142,7 @@ export default {
           API_KEY,
         {
           method: "POST",
-          body: JSON.stringify({ idToken: token })
+          body: JSON.stringify({ idToken: token }),
         }
       );
 
@@ -151,19 +151,11 @@ export default {
         const error = new Error(response);
         throw error;
       }
-            console.log('haha')
+      console.log("haha");
     }
 
-
-
-
-
-
-
-
-    
     localStorage.removeItem("conclave");
     localStorage.removeItem("localId");
     localStorage.removeItem("token");
-  }
+  },
 };

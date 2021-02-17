@@ -13,20 +13,20 @@
 </template>
 
 <script>
-    export default {
-                methods: {
+export default {
+  methods: {
     logout() {
       this.$store.dispatch("auth/logout");
-    }
+    },
   },
-          computed: {
-              checkPath() {
+  computed: {
+    checkPath() {
       return this.$route.path === "/home" ? true : false;
     },
     isLoggedIn() {
       return this.$store.getters["auth/isAuthenticated"];
-    }
-  }
+    },
+  },
 };
 </script>
 
