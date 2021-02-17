@@ -8,10 +8,8 @@ export default {
     return state.userId;
   },
 
-
-
   checkUser() {
-    console.log('ha')
+    console.log("haaa");
     return !!localStorage.getItem("conclave");
   },
 };
