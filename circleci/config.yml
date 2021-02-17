@@ -1,0 +1,20 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+jobs:
+  build:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - checkout
+      - npm run install
+      - npm run build
+  test:
+    docker:
+      - image: alpine:3.7
+    steps: echo 'Testing'
+workflows:
+  node-tests:
+    jobs:
+      - build
+      - test
