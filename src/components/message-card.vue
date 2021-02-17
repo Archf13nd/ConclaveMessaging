@@ -39,7 +39,9 @@ export default {
         messageId: msgId
       });
     },
-    addEventListener() {
+
+
+                                    addEventListener() {
       this.$refs.messageCard.addEventListener("mouseover", e => {
         const isLoggedIn = this.$store.getters["auth/isLoggedIn"];
         let userId;
@@ -50,8 +52,7 @@ export default {
         }
         console.log(e.target.closest(".container").id === userId);
         // console.log(userId)
-        if (e.target.closest(".container").id === userId) {
-          this.isUserMessage = true;
+        if (e.target.closest(".container").id === userId) {this.isUserMessage = true;
         }
       });
     }
