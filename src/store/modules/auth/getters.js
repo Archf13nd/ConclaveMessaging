@@ -11,8 +11,10 @@ export default {
 
 
 
-
   
+
+
+
   checkUser() {
     return !!localStorage.getItem("conclave");
   }
