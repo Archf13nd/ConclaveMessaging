@@ -32,10 +32,5 @@
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",
     "sass-loader": "^8.0.2"
-  },
-    "husky": {
-      "hooks": {
-        "pre-commit": " --staged"
-      }
-    }
+  }
 }
