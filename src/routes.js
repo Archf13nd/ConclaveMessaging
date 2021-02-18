@@ -19,12 +19,12 @@ const router = createRouter({
         {
           path: "details",
           component: ChangeDetails,
-          meta: { requiresAuth: true },
+          meta: { requiresAuth: false }, //todo Set up authentication again
         },
         {
           path: "deletedata",
           component: DeleteData,
-          meta: { requiresAuth: true },
+          meta: { requiresAuth: false },
         },
       ],
     },

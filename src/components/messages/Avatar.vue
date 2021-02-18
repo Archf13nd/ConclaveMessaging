@@ -39,8 +39,9 @@ export default {
 .username {
   position: absolute;
   text-align: center;
+  font-size: 12px;
   width: 100%;
-  top: -20px;
+  top: -15px;
   left: 0;
 }
 

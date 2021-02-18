@@ -1,117 +1,85 @@
 <template>
-  <div class="setting-links">
-    <div class="nav-divider">
-      <router-link to="/settings/details">Details</router-link>
-      <router-link to="/settings/signup">Sign up</router-link>
+  <section class="settings-container">
+    <div class="form-view">
+      <div class="settings-nav-link">
+        <router-link v-if="!currentPath" to="/settings/details"
+          ><p class="reverse-skew">Details</p></router-link
+        >
+        <router-link v-else to="/settings/deletedata"
+          ><p class="reverse-skew">Delete</p></router-link
+        >
+      </div>
+      <router-view
+        :username="userDetails.username"
+        :avatar="userDetails.avatar"
+        :userId="userDetails.userId"
+      ></router-view>
     </div>
-    <div class="nav-divider">
-      <router-link to="/settings/signin">Sign in</router-link>
-      <router-link to="/settings/deletedata">Delete Data</router-link>
-    </div>
-  </div>
-  <div class="form-view">
-    <router-view
-      :checkName="checkName"
-      :getName="getName"
-      :checkImg="checkImg"
-      :getImg="getImg"
-      :url="url"
-    ></router-view>
-  </div>
+  </section>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      name: "",
-      url: ""
+      userDetails: null,
+      currentPath: true,
     };
   },
-  computed: {
-    checkName() {
-      if (this.checkData()) {
-        return "Change your username:";
-      } else {
-        return "Choose a username:";
-      }
-    },
-    getName() {
-      if (this.checkData()) {
-        return JSON.parse(localStorage.getItem("conclave"))["name"];
-      } else {
-        return "";
-      }
-    },
-    checkImg() {
-      if (this.checkData("url")) {
-        return "Change your profile picture :)";
-      } else {
-        return "Choose a profile picture";
-      }
-    },
-    getImg() {
-      if (this.checkData("url")) {
-        return JSON.parse(localStorage.getItem("conclave"))["url"];
-      } else {
-        return "";
-      }
-    }
-  },
   methods: {
-    checkData(field = "name") {
-      if (localStorage.getItem("conclave")) {
-        return JSON.parse(localStorage.getItem("conclave"))[field]
-          ? true
-          : false;
-      }
+    whatPath() {
+      this.currentPath =
+        this.$route.path === "/settings/details" ? true : false;
     },
-    confirm() {
-      const dataObject = JSON.parse(localStorage.getItem("conclave"));
-      this.name ? (dataObject.name = this.name) : false;
-      this.url ? (dataObject.url = this.url) : false;
-      localStorage.setItem("conclave", JSON.stringify(dataObject));
-      this.$router.push("/home");
-    }
   },
   created() {
-    if (localStorage.getItem("conclave")) {
-      this.url = JSON.parse(localStorage.getItem("conclave"))["url"];
-    }
-  }
+    //todo might need more validation
+    this.userDetails = this.$store.getters["auth/getUserDetails"];
+  },
+  updated() {
+    this.currentPath = this.$route.path === "/settings/details" ? true : false;
+  },
 };
 </script>
 
-<style scoped>
-.setting-links {
-  display: flex;
-  justify-content: center;
-  max-width: 80%;
-  margin: 30px auto;
+<style lang="scss" scoped>
+.settings-container {
+  // width: 100vw;
+  // height: 100%;
+  display: grid;
+  grid-template:
+    90% 10% / repeat(2, minmax(3px, 1fr)) repeat(8, minmax(35px, 1fr))
+    repeat(2, minmax(3px, 1fr));
+  column-gap: 0.83%;
 }
 
 .form-view {
-  margin-top: 50px;
+  height: calc(100vh - calc(#{$header-height} + 24px));
+  position: relative;
+  background: $background-body;
+  grid-area: 1 / 4 / 3 / 10;
+  margin-top: calc(#{$header-height} + 24px);
 }
 
-.nav-divider {
-  width: fit-content;
+.settings-nav-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6rem;
+  width: 14rem;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
+  background: $nav-button-color;
+  margin: 2rem;
+  transform: skewX(-20deg);
+  box-shadow: $shadow-default;
 }
 
 a {
-  width: fit-content;
-  min-width: 90px;
-  height: 30px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #fff;
+  display: inline-block;
   text-decoration: none;
-  margin: 5px 20px;
+  font-size: 24px;
+  color: #000;
 }
 </style>

@@ -3,7 +3,7 @@
     <router-link class="skew" v-if="checkPath" to="/settings">
       <p class="reverse-skew">Settings</p>
     </router-link>
-    <router-link v-else to="/home" class="signup">
+    <router-link class="signup skew" v-else to="/home">
       <p class="reverse-skew">Home</p>
     </router-link>
     <div class="skew" v-if="!isLoggedIn" @click="logout">
@@ -42,6 +42,7 @@ header {
   align-items: center;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 0 16%;
+  margin: 0;
 }
 
 a,
