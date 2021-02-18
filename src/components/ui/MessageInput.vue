@@ -1,6 +1,6 @@
 <template>
   <form class="message-form" @submit.prevent="sendMessage">
-    <input class="input" v-model="message" type="text" />
+    <input class="input" v-model="messageContent" type="text" />
     <button class="send-btn" type="submit" value="Send">Send</button>
   </form>
 </template>
@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      message: "",
+      messageContent: "",
     };
   },
   methods: {

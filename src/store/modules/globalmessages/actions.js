@@ -1,9 +1,15 @@
 const FIREBASE_URL = process.env.VUE_APP_FIREBASE_URL;
-console.log(process.env.VUE_APP_FIREBASE_URL, "env");
 
 export default {
   // Code that sends a message object to firebase
   async sendMessage(context, { messageContent }) {
+    console.log(messageContent);
+
+    // TESTING //Remove
+    localStorage.setItem("token", 1);
+
+    localStorage.getItem("token");
+
     const token = localStorage.getItem("token");
     if (token) {
       // Get user details
@@ -11,22 +17,28 @@ export default {
         "auth/getUserDetails"
       ];
 
+      console.log(avatar);
+
       // Send message as signed up user
       const messageObject = {
         username: username,
         avatar: avatar,
         userId: userId,
-        date: Date.now,
+        date: Date.now(),
         content: messageContent,
       };
 
+      console.log(messageObject, "Message Object");
+
       const response = await fetch(
-        `${FIREBASE_URL}globalmessages.json?auth=${token}`,
+        `${FIREBASE_URL}globalmessages.json`, //todo
         {
           method: "POST",
           body: JSON.stringify(messageObject),
         }
       );
+
+      console.log(response);
       //todo handle error message
       if (!response.ok) {
         const error = new Error(response);
@@ -37,12 +49,14 @@ export default {
     }
   },
   async fetchMessages(context) {
+    console.log("Fetching messages");
     const response = await fetch(`${FIREBASE_URL}globalmessages.json`);
     if (!response.ok) {
       const error = new Error(response);
       throw error;
     }
     const messages = await response.json();
+    console.log(messages);
     const arrayOfMessages = [];
 
     for (const key in messages) {
@@ -54,8 +68,8 @@ export default {
         content: messages[key].content,
       });
     }
-
-    context.commit("storeMsg", messages);
+    console.log(arrayOfMessages);
+    context.commit("storeMessages", { arrayOfMessages });
   },
   async deleteMessage(context, payload) {
     console.log("hi");

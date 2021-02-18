@@ -1,8 +1,13 @@
 /* Color manager */
 
 $color-header: rgba(20, 51, 190, 0);
-$color-side: #c4c4c4;
-$color-body: #2024201f;
+$color-side: #fff;
+$background-body: linear-gradient(
+  120.24deg,
+  rgba(208, 208, 208, 0.76) -0.62%,
+  rgba(0, 0, 0, 0.4408) 100%
+);
+$color-message-body: #fff;
 
 /* Font manager */
 $font-size-message: 20px;

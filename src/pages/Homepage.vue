@@ -1,11 +1,10 @@
 <template>
-  <section class="message-container" ref="death">
-    <div class="sides">Ha</div>
+  <section class="homepage-container" ref="death">
+    <!-- <div class="sides">Ha</div> -->
     <loader v-if="isLoading"></loader>
     <div v-else class="message-box" ref="msgBox">
       <message-body
-        class="msg-cards"
-        v-for="message in messages"
+        v-for="message in arrayOfMessages"
         :key="message.userId"
         :username="message.username"
         :avatar="message.avatar"
@@ -14,7 +13,7 @@
         :refresh="refreshCount"
       ></message-body>
     </div>
-    <div class="sides"></div>
+    <!-- <div class="sides"></div> -->
     <message-input></message-input>
     <div class="footer"></div>
   </section>
@@ -37,7 +36,6 @@ export default {
   },
   created() {
     this.setMessages();
-    console.log("what");
     if (!this.$store.getters["auth/checkUser"]) {
       this.existingUser = false;
     }
@@ -61,7 +59,8 @@ export default {
     },
   },
   computed: {
-    messages() {
+    arrayOfMessages() {
+      console.log(this.$store.getters["globalmessages/getMessages"]);
       return this.$store.getters["globalmessages/getMessages"];
     },
   },
@@ -71,28 +70,35 @@ export default {
 <style lang="scss" scoped>
 @import "../scss/variables.scss";
 
-.message-container {
-  height: $body-height;
+.homepage-container {
+  height: 100vh;
   width: 100vw;
-  background: $color-body;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template: 100% / repeat(2, minmax(3px, 1fr)) repeat(8, minmax(40px, 1fr)) repeat(
+      2,
+      minmax(3px, 1fr)
+    );
+  column-gap: 0.83%;
 }
 
 .message-box {
-  height: 95%;
-  flex: 10 1 300px;
+  background: $background-body;
+  grid-column: 3 / 11;
   overflow-y: scroll;
 }
 
 .sides {
   background: $color-side;
-  height: 95%;
+  height: 100%;
   flex-grow: 1;
 }
 
 .footer {
-  height: 5%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  z-index: -10;
   flex-basis: 100%;
   background: $color-side;
   // display: none;
