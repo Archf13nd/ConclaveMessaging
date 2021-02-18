@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "./pages/Home.vue";
+import Homepage from "./pages/Homepage.vue";
 import Settings from "./pages/Settings.vue";
 import ChangeDetails from "./components/settings/ChangeDetails.vue";
 import DeleteData from "./components/settings/DeleteData.vue";
