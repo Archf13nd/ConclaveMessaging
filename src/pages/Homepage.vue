@@ -1,21 +1,22 @@
 <template>
   <section class="homepage-container" ref="death">
-    <!-- <div class="sides">Ha</div> -->
     <loader v-if="isLoading"></loader>
-    <div v-else class="message-box" ref="msgBox">
+    <div v-else class="messages-container" ref="msgBox">
       <message-body
+        class="message-body"
         v-for="message in arrayOfMessages"
         :key="message.userId"
         :username="message.username"
         :avatar="message.avatar"
         :date="message.date"
         :content="message.content"
-        :refresh="refreshCount"
+        :messageId="message.messageId"
       ></message-body>
     </div>
-    <!-- <div class="sides"></div> -->
-    <message-input></message-input>
-    <div class="footer"></div>
+    <message-input
+      class="message-input"
+      @sendMessage="sendMessage"
+    ></message-input>
   </section>
 </template>
 
@@ -35,17 +36,18 @@ export default {
     Loader,
   },
   created() {
-    this.setMessages();
+    this.fetchMessages();
     if (!this.$store.getters["auth/checkUser"]) {
       this.existingUser = false;
     }
   },
   updated() {
+    console.log("this.$refs.death.childNodes[1].scrollHeight");
     const cHeight = this.$refs.death.childNodes[1].scrollHeight;
     this.$refs.death.childNodes[1].scrollTop = cHeight;
   },
   methods: {
-    async setMessages() {
+    async fetchMessages() {
       const timer = setTimeout(() => {
         this.isLoading = true;
       }, 500);
@@ -56,6 +58,11 @@ export default {
       }
       this.isLoading = false;
       clearTimeout(timer);
+    },
+    sendMessage({ messageContent }) {
+      this.$store.dispatch("globalmessages/sendMessage", {
+        messageContent: messageContent,
+      });
     },
   },
   computed: {
@@ -74,34 +81,29 @@ export default {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template: 100% / repeat(2, minmax(3px, 1fr)) repeat(8, minmax(40px, 1fr)) repeat(
-      2,
-      minmax(3px, 1fr)
-    );
+  grid-template: 90% 10% / repeat(2, minmax(3px, 1fr)) repeat(
+      8,
+      minmax(35px, 1fr)
+    ) repeat(2, minmax(3px, 1fr));
   column-gap: 0.83%;
 }
 
-.message-box {
+.messages-container {
+  position: relative;
+  margin-top: calc(#{$header-height} + 24px);
   background: $background-body;
+  grid-row: 1 / -1;
   grid-column: 3 / 11;
   overflow-y: scroll;
+  border-radius: 8px;
 }
 
-.sides {
-  background: $color-side;
-  height: 100%;
-  flex-grow: 1;
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  z-index: -10;
-  flex-basis: 100%;
-  background: $color-side;
-  // display: none;
+.message-input {
+  position: relative;
+  // background: #000;
+  grid-row: 2 / 3;
+  grid-column: 3 / span 8;
+  justify-self: center;
 }
 
 .loading-container {
@@ -124,7 +126,7 @@ export default {
   align-items: center;
 }
 
-.msg-cards:last-child {
-  margin-bottom: 70px;
+.message-body:last-child {
+  margin-bottom: 88px;
 }
 </style>

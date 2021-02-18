@@ -66,43 +66,25 @@ export default {
         userId: messages[key].userId,
         date: messages[key].date,
         content: messages[key].content,
+        messageId: key,
       });
     }
     console.log(arrayOfMessages);
     context.commit("storeMessages", { arrayOfMessages });
   },
-  async deleteMessage(context, payload) {
-    console.log("hi");
-    const response = await fetch(
-      `https://message-app-72e27-default-rtdb.europe-west1.firebasedatabase.app/globalmessages.json`,
-      {
-        method: "GET",
-      }
-    );
-
-    if (!response.ok) {
-      const error = new Error(response);
-      console.log(error);
-      throw error;
-    }
-    const responseData = await response.json();
-    let theKey;
-    for (const key in responseData) {
-      if (responseData[key]["msgId"] === payload.messageId) {
-        theKey = key;
-      }
-    }
+  async deleteMessage(context, { messageId }) {
     const deleteResponse = await fetch(
-      `https://message-app-72e27-default-rtdb.europe-west1.firebasedatabase.app/globalmessages/${theKey}.json`,
+      `https://message-app-72e27-default-rtdb.europe-west1.firebasedatabase.app/globalmessages/${messageId}.json`,
       {
         method: "DELETE",
       }
     );
+
     if (!deleteResponse.ok) {
-      const error = new Error(response);
+      const error = new Error(deleteResponse);
       console.log(error);
       throw error;
     }
-    context.dispatch("returnMsg");
+    context.dispatch("fetchMessages");
   },
 };

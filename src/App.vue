@@ -35,6 +35,14 @@ body {
   margin: 0;
 }
 
+.skew {
+  transform: skewX(-20deg);
+}
+
+.reverse-skew {
+  transform: skewX(20deg);
+}
+
 .form-container {
   width: 100vw;
   height: 700px;

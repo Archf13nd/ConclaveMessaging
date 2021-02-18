@@ -1,19 +1,20 @@
 /* Color manager */
 
-$color-header: rgba(20, 51, 190, 0);
+$header-background: rgba(7, 7, 7, 0.6);
 $color-side: #fff;
 $background-body: linear-gradient(
   120.24deg,
   rgba(208, 208, 208, 0.76) -0.62%,
   rgba(0, 0, 0, 0.4408) 100%
 );
-$color-message-body: #fff;
+$color-message-body: linear-gradient(91.58deg, #e6e6e6 0%, #ffffff 114.18%);
+$nav-button-color: #fff;
 
 /* Font manager */
 $font-size-message: 20px;
 
 /* Layout */
-$header-height: 50px;
+$header-height: 64px;
 $body-height: calc(100vh - 50px);
 
 /* Forms */

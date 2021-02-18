@@ -1,13 +1,13 @@
 <template>
   <header class="header">
-    <router-link v-if="checkPath" to="/settings">
-      <p>Settings</p>
+    <router-link class="skew" v-if="checkPath" to="/settings">
+      <p class="reverse-skew">Settings</p>
     </router-link>
     <router-link v-else to="/home" class="signup">
-      <p>Home</p>
+      <p class="reverse-skew">Home</p>
     </router-link>
-    <div v-if="isLoggedIn" @click="logout">
-      <p>Logout</p>
+    <div class="skew" v-if="!isLoggedIn" @click="logout">
+      <p class="reverse-skew">Logout</p>
     </div>
   </header>
 </template>
@@ -30,30 +30,40 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
   position: fixed;
   z-index: 100;
   width: 100%;
-  height: 50px;
-  background: #000;
+  height: 64px;
+  background: $header-background;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 0 16%;
 }
 
 a,
 div {
-  margin-right: 5%;
-  border: 2px solid white;
-  padding: 3px 20px;
-  height: 70%;
+  background: $nav-button-color;
+  width: 112px;
+  height: 48px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-right: 24px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  &:hover {
+    border: 2px solid #8df35c;
+  }
 }
 
 p {
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: none;
+  font-size: 20px;
 }
 </style>

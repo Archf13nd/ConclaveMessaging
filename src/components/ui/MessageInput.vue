@@ -1,7 +1,18 @@
 <template>
-  <form class="message-form" @submit.prevent="sendMessage">
-    <input class="input" v-model="messageContent" type="text" />
-    <button class="send-btn" type="submit" value="Send">Send</button>
+  <form
+    class="message-input-form skew"
+    :class="{ invalid: invalid }"
+    @submit.prevent="sendMessage"
+  >
+    <input
+      class="reverse-skew"
+      @change="invalid = false"
+      v-model="messageContent"
+      type="text"
+    />
+    <button class="send-btn" type="submit" value="Send">
+      <p class="reverse-skew">Send</p>
+    </button>
   </form>
 </template>
 
@@ -10,55 +21,63 @@ export default {
   data() {
     return {
       messageContent: "",
+      invalid: false,
     };
   },
   methods: {
     sendMessage() {
-      console.log("hahaha");
-      this.$store.dispatch("globalmessages/sendMessage", {
-        messageContent: this.messageContent,
-      });
+      this.invalid = false;
+      if (this.messageContent) {
+        this.$emit("sendMessage", { messageContent: this.messageContent });
+        this.messageContent = "";
+      } else {
+        this.invalid = true;
+      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.message-form {
-  background: rgb(47, 50, 51);
-  padding: 30px 20px;
-  position: fixed;
-  bottom: 20px;
-  width: 80%;
-  height: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
+.invalid {
+  border: 2px solid red;
 }
 
-.input {
-  display: inline-block;
-  width: 100%;
-  height: 40px;
-  border: 3px solid black;
+.wrapperff {
+  background: #000;
 }
-
 .send-btn {
-  background: rgb(193, 216, 157);
-  width: 80px;
-  height: 40px;
-
-  border: 3px solid black;
+  background: #8cf35c;
+  width: 112px;
+  border: none;
+  border-radius: 0 8px 8px 0;
 }
 
-.evil {
+.message-input-form {
+  background: rgb(255, 255, 255);
+  height: 48px;
+  width: 90%;
   display: flex;
+  justify-content: flex-end;
+  border-radius: 8px;
+  padding: 0 0 0 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.haha {
-  color: #000;
+input {
+  border: none;
+  height: 100%;
+  width: 85%;
+  margin-right: 10px;
+  background: transparent;
+}
+input:focus {
+  outline: none;
+}
+
+p {
+  display: inline-block;
+  font-size: 18px;
+  letter-spacing: 13%;
 }
 </style>
