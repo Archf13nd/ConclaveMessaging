@@ -33,7 +33,7 @@ export default {
 <style lang="scss" scoped>
 header {
   position: fixed;
-  z-index: 100;
+  z-index: 10;
   width: 100%;
   height: 64px;
   background: $header-background;

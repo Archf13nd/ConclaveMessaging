@@ -20,3 +20,11 @@ $body-height: calc(100vh - 50px);
 /* Forms */
 $input-height: 30px;
 $input-width: 80%;
+
+@mixin grid-12 {
+  display: grid;
+  grid-template:
+    90% 10% / repeat(2, minmax(3px, 1fr)) repeat(8, minmax(35px, 1fr))
+    repeat(2, minmax(3px, 1fr));
+  column-gap: 0.83%;
+}
