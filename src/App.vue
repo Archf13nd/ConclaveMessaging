@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <sign-up-modal></sign-up-modal> -->
+    <sign-up-modal></sign-up-modal>
     <!-- <sign-in-modal></sign-in-modal> -->
     <the-header></the-header>
     <router-view></router-view>
@@ -9,14 +9,14 @@
 
 <script>
 import theHeader from "./components/ui/Header.vue";
-// import SignUpModal from "./components/modals/SignUp.vue";
+import SignUpModal from "./components/modals/SignUp.vue";
 // import SignInModal from "./components/modals/SignIn.vue";
 
 export default {
   name: "App",
   components: {
     theHeader,
-    // SignUpModal,
+    SignUpModal,
     // SignInModal, //todo
   },
 };

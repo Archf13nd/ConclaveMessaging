@@ -2,3 +2,17 @@
 }
 
 $form-input-color: #e9e9e9;
+
+@mixin grid-12 {
+  display: grid;
+  grid-template:
+    90% 10% / repeat(3, minmax(3px, 1fr)) repeat(6, minmax(145px, 1fr))
+    repeat(3, minmax(3px, 1fr));
+  column-gap: 0.83%;
+
+  @media screen and (max-width: 1000px) {
+    display: block;
+    margin-left: 2.5vw;
+    width: 95vw;
+  }
+}
