@@ -3,21 +3,14 @@ const FIREBASE_URL = process.env.VUE_APP_FIREBASE_URL;
 export default {
   // Code that sends a message object to firebase
   async sendMessage(context, { messageContent }) {
-    console.log(messageContent);
-
-    // TESTING //Remove
-    localStorage.setItem("token", 1);
-
-    localStorage.getItem("token");
-
     const token = localStorage.getItem("token");
     if (token) {
       // Get user details
-      const { username, avatar, userId } = context.rootGetters[
-        "auth/getUserDetails"
-      ];
+      const userObject = context.rootGetters["auth/getUserDetails"];
 
-      console.log(avatar);
+      const username = userObject.username;
+      const avatar = userObject.avatar;
+      const userId = userObject.userId;
 
       // Send message as signed up user
       const messageObject = {
@@ -28,8 +21,6 @@ export default {
         content: messageContent,
       };
 
-      console.log(messageObject, "Message Object");
-
       const response = await fetch(
         `${FIREBASE_URL}globalmessages.json`, //todo
         {
@@ -38,7 +29,6 @@ export default {
         }
       );
 
-      console.log(response);
       //todo handle error message
       if (!response.ok) {
         const error = new Error(response);
@@ -49,14 +39,12 @@ export default {
     }
   },
   async fetchMessages(context) {
-    console.log("Fetching messages");
     const response = await fetch(`${FIREBASE_URL}globalmessages.json`);
     if (!response.ok) {
       const error = new Error(response);
       throw error;
     }
     const messages = await response.json();
-    console.log(messages);
     const arrayOfMessages = [];
 
     for (const key in messages) {
@@ -69,7 +57,6 @@ export default {
         messageId: key,
       });
     }
-    console.log(arrayOfMessages);
     context.commit("storeMessages", { arrayOfMessages });
   },
   async deleteMessage(context, { messageId }) {
@@ -82,7 +69,6 @@ export default {
 
     if (!deleteResponse.ok) {
       const error = new Error(deleteResponse);
-      console.log(error);
       throw error;
     }
     context.dispatch("fetchMessages");

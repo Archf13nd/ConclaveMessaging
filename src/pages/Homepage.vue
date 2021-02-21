@@ -42,7 +42,6 @@ export default {
     }
   },
   updated() {
-    console.log("this.$refs.death.childNodes[1].scrollHeight");
     const cHeight = this.$refs.death.childNodes[1].scrollHeight;
     this.$refs.death.childNodes[1].scrollTop = cHeight;
   },
@@ -53,8 +52,9 @@ export default {
       }, 500);
       try {
         await this.$store.dispatch("globalmessages/fetchMessages");
-      } catch (error) {
-        console.log("An error in home.vue 41", error);
+      } catch (err) {
+        const error = new Error(err);
+        throw error;
       }
       this.isLoading = false;
       clearTimeout(timer);
@@ -67,7 +67,6 @@ export default {
   },
   computed: {
     arrayOfMessages() {
-      console.log(this.$store.getters["globalmessages/getMessages"]);
       return this.$store.getters["globalmessages/getMessages"];
     },
   },
@@ -81,10 +80,9 @@ export default {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template: 90% 10% / repeat(2, minmax(3px, 1fr)) repeat(
-      8,
-      minmax(35px, 1fr)
-    ) repeat(2, minmax(3px, 1fr));
+  grid-template:
+    90% 10% / repeat(2, minmax(3px, 1fr)) repeat(8, minmax(35px, 1fr))
+    repeat(2, minmax(3px, 1fr));
   column-gap: 0.83%;
 }
 

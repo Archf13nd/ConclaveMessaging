@@ -1,16 +1,38 @@
 const API_KEY = process.env.VUE_APP_API_KEY;
-
+let timeoutTimer;
 export default {
   // Login Function - Takes in email and password as payload. Dispatches Auth action with payload.
   async login(context, payload) {
-    context.dispatch("auth", {
-      ...payload,
-      mode: "login",
-    });
+    try {
+      context.dispatch("auth", {
+        ...payload,
+        mode: "login",
+      });
+      context.commit("validSession", true);
+    } catch (err) {
+      const error = new Error(err);
+      throw error;
+    }
+  },
+  autoLogin(context) {
+    const token = localStorage.getItem("token");
+    const tokenExpiration = +localStorage.getItem("expirationDate");
+
+    if (token && tokenExpiration) {
+      const timeRemaining = tokenExpiration - new Date().getTime();
+
+      if (timeRemaining > 10 && token) {
+        context.commit("validSession", true);
+        context.dispatch("fetchUserDetails");
+        timeoutTimer = setTimeout(() => {
+          context.dispatch("logout");
+        }, timeRemaining);
+      }
+    }
   },
   // Signup function - takes in name, url, email, and password as payload. Dispatchees Auth action with payload
   async signup(context, payload) {
-    context.dispatch("auth", {
+    return context.dispatch("auth", {
       ...payload,
       mode: "signup",
     });
@@ -18,9 +40,11 @@ export default {
   // Logs user out
   logout(context) {
     localStorage.removeItem("token");
+    localStorage.removeItem("expirationDate");
+    context.commit("validSession", false);
     context.commit("logout");
+    clearTimeout(timeoutTimer);
   },
-
   // Auth function. Responsible for handling login or signup actions.
   async auth(context, { mode, username, avatar, email, password }) {
     // Runs if check for whether request is login or signup
@@ -48,7 +72,6 @@ export default {
 
     // Error handling
     if (!response.ok) {
-      console.log("response");
       const error = new Error("Error");
       throw error;
     }
@@ -59,10 +82,13 @@ export default {
     // Store secure token in local Storage
     localStorage.setItem("token", responseData.idToken);
     // Set expiration time in local storage
-    localStorage.setItem("expirationDate", responseData.expiresIn);
+    const expirationDate =
+      new Date().getTime() + +responseData.expiresIn * 1000;
+    localStorage.setItem("expirationDate", expirationDate);
 
     // If mode is signup then there will be two more properties in payload. name and url. This dispatches the changeUserDetails action that handles these user details.
     if (mode === "signup") {
+      localStorage.setItem("existingUser", true);
       await context.dispatch("updateUserProfile", {
         username: username,
         avatar: avatar,
@@ -77,8 +103,8 @@ export default {
     const response = await fetch(
       `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`,
       {
-        method: "GET",
-        body: { idToken: localStorage.getItem("token") },
+        method: "POST",
+        body: JSON.stringify({ idToken: localStorage.getItem("token") }),
       }
     );
     if (!response.ok) {
@@ -86,11 +112,15 @@ export default {
       throw error;
     }
     const responseData = await response.json();
+    console.log(responseData.users[0]);
     context.commit("storeUser", {
-      username: responseData.displayName,
-      avatar: responseData.photoUrl,
-      userId: responseData.localId,
+      username: responseData.users[0].displayName,
+      avatar: responseData.users[0].photoUrl,
+      userId: responseData.users[0].localId,
     });
+
+    const userDetails = context.getters["getUserDetails"];
+    console.log(userDetails, "AUTH/ACTIONS");
   },
   // Changes user details. Used on signup to add details or later on to change details if user is loggedIn.
   async updateUserProfile(context, { username, avatar }) {
@@ -101,8 +131,8 @@ export default {
         method: "POST",
         body: JSON.stringify({
           idToken: localStorage.getItem("token"),
-          username: username,
-          avatar: avatar,
+          displayName: username,
+          photoUrl: avatar,
         }),
       }
     );
@@ -135,7 +165,6 @@ export default {
       );
 
       if (!response.ok) {
-        console.log("response", response);
         const error = new Error(response);
         throw error;
       }

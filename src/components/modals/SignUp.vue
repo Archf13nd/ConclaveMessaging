@@ -171,8 +171,20 @@ export default {
       const success = count === 4;
       return success;
     },
-    submitForm() {
+    async submitForm() {
       if (this.checkInputs()) {
+        try {
+          await this.$store.dispatch("auth/signup", {
+            username: this.username,
+            avatar: this.avatar,
+            email: this.email,
+            password: this.password,
+          });
+        } catch (err) {
+          //todo Display to user that something went wrong
+          const error = new Error(err);
+          throw error;
+        }
       }
     },
   },

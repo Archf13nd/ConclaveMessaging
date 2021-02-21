@@ -7,11 +7,10 @@ export default {
   state() {
     return {
       //todo
-      isValidSession: null,
-      username: "Death",
-      avatar:
-        "https://t4.ftcdn.net/jpg/03/09/97/57/360_F_309975771_1LcdaVK6D7eokEDzaAInNBGOG5tA9M80.jpg", //Store default avatar here
-      userId: 3,
+      isValidSession: false,
+      username: null,
+      avatar: null, //Store default avatar here
+      userId: null,
     };
   },
   actions,

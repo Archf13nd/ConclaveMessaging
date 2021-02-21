@@ -1,7 +1,11 @@
 <template>
   <div>
-    <sign-up-modal></sign-up-modal>
-    <!-- <sign-in-modal></sign-in-modal> -->
+    <sign-up-modal
+      v-if="!userLoggedIn && timePassed && !existingUser"
+    ></sign-up-modal>
+    <sign-in-modal
+      v-if="!userLoggedIn && timePassed && existingUser"
+    ></sign-in-modal>
     <the-header></the-header>
     <router-view></router-view>
   </div>
@@ -10,14 +14,32 @@
 <script>
 import theHeader from "./components/ui/Header.vue";
 import SignUpModal from "./components/modals/SignUp.vue";
-// import SignInModal from "./components/modals/SignIn.vue";
+import SignInModal from "./components/modals/SignIn.vue";
 
 export default {
   name: "App",
   components: {
     theHeader,
     SignUpModal,
-    // SignInModal, //todo
+    SignInModal,
+  },
+  data() {
+    return {
+      timePassed: false,
+      existingUser: false,
+    };
+  },
+  computed: {
+    userLoggedIn() {
+      return this.$store.getters["auth/isValidSession"];
+    },
+  },
+  created() {
+    this.$store.dispatch("auth/autoLogin");
+    this.existingUser = localStorage.getItem("existingUser");
+    setTimeout(() => {
+      this.timePassed = true;
+    }, 500);
   },
 };
 </script>
@@ -41,6 +63,13 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.hidden {
+  display: none;
+}
+/* .show {
+  display: block;
+} */
 
 .skew {
   transform: skewX(-20deg);
