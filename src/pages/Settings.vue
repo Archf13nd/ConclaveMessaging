@@ -9,11 +9,7 @@
           ><p class="reverse-skew">Delete</p></router-link
         >
       </div>
-      <router-view
-        :username="userDetails.username"
-        :avatar="userDetails.avatar"
-        :userId="userDetails.userId"
-      ></router-view>
+      <router-view></router-view>
     </div>
   </section>
 </template>
@@ -31,10 +27,6 @@ export default {
       this.currentPath =
         this.$route.path === "/settings/details" ? true : false;
     },
-  },
-  created() {
-    //todo might need more validation
-    this.userDetails = this.$store.getters["auth/getUserDetails"];
   },
   updated() {
     this.currentPath = this.$route.path === "/settings/details" ? true : false;

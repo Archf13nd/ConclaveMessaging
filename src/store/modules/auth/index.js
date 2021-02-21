@@ -9,6 +9,7 @@ export default {
       //todo
       isValidSession: false,
       username: null,
+      email: null,
       avatar: null, //Store default avatar here
       userId: null,
     };

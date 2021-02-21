@@ -5,6 +5,7 @@ export default {
   getUserDetails(state) {
     return {
       username: state.username,
+      email: state.email,
       avatar: state.avatar,
       userId: state.userId,
     };

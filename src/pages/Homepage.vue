@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables.scss";
+// @import "../scss/variables.scss";
 
 .homepage-container {
   height: 100vh;

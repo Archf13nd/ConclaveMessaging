@@ -59,6 +59,15 @@ button {
   color: rgb(0, 0, 0);
   font-size: 50px;
   border: none;
+  outline: none;
+
+  &:hover {
+    transform: translateY(-1rem) scale(1.05);
+  }
+  &:active {
+    transform: translateY(1rem);
+    border: none;
+  }
 }
 
 .button-text {
