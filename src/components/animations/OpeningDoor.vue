@@ -58,7 +58,7 @@ html {
   perspective: 300px;
 
   & .item {
-    background-color: #5ec994;
+    background-color: #58c08c;
     border: 5px outset white;
     &::before,
     &::after {
