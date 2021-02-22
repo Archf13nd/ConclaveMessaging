@@ -60,6 +60,7 @@ export default {
     context.commit("storeMessages", { arrayOfMessages });
   },
   async deleteMessage(context, { messageId }) {
+    const token = localStorage.getItem("token");
     const deleteResponse = await fetch(
       `https://message-app-72e27-default-rtdb.europe-west1.firebasedatabase.app/globalmessages/${messageId}.json?auth=${token}`,
       {

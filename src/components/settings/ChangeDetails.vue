@@ -90,7 +90,6 @@ export default {
       let username = this.getUserDetails.username;
       let avatar = this.getUserDetails.avatar;
       let email = this.getUserDetails.email;
-      let password = this.getUserDetails.password;
       let isChange = null;
 
       if (this.username) {
