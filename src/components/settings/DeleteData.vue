@@ -1,10 +1,11 @@
 <template>
   <section class="delete-user-container">
     <h3 class="danger-title">DANGER!</h3>
-    <info
-      >I hereby acknowledge that by smashing the delete button my account and
-      all the information associated with it will be deleted forever. No take
-      backs. We will be sorry to see you go.</info
+    <info>
+      <input class="confirm-deletion" type="checkbox" v-model="confirmed" /> I
+      hereby acknowledge that by smashing the delete button my account and all
+      the information associated with it will be deleted forever. No take backs.
+      We will be sorry to see you go.</info
     >
     <button type="submit" @click="deleteData">
       <p class="button-text">DELETE</p>
@@ -14,8 +15,16 @@
 
 <script>
 export default {
+  data() {
+    return {
+      confirmed: false,
+    };
+  },
   methods: {
     async deleteData() {
+      if (!this.confirmed) {
+        return;
+      }
       try {
         await this.$store.dispatch("auth/deleteAccount");
       } catch (error) {
@@ -44,6 +53,9 @@ export default {
 
 .danger-title {
   font-size: 9rem;
+}
+
+.confirm-deletion {
 }
 
 info {
