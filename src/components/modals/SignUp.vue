@@ -83,9 +83,7 @@
         </button>
       </form>
       <h3 class="text-link">
-        <router-link to="home"
-          >Aleady have an account? Sign in instead!</router-link
-        >
+        <p @click="changeModal">Already have an account? Sign in instead!</p>
       </h3>
     </div>
   </div>
@@ -173,6 +171,9 @@ export default {
       const success = count === 4;
       return success;
     },
+    changeModal() {
+      this.$emit("changeModal", "signin");
+    },
     async submitForm() {
       if (this.checkInputs()) {
         try {
@@ -195,4 +196,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/_form-styles.scss";
+
+.text-link:hover {
+  transform: translateY(-3px);
+  cursor: pointer;
+}
 </style>

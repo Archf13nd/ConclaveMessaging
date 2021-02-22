@@ -3,7 +3,7 @@ import Homepage from "./pages/Homepage.vue";
 import Settings from "./pages/Settings.vue";
 import ChangeDetails from "./components/settings/ChangeDetails.vue";
 import DeleteData from "./components/settings/DeleteData.vue";
-import { store } from "vuex";
+import store from "./store/index.js";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -33,7 +33,7 @@ const router = createRouter({
 });
 
 router.beforeEach(function (to, _, next) {
-  if (to.meta.requiresAuth && !store.getters["auth/isAuthenticated"]) {
+  if (to.meta.requiresAuth && !store.getters["auth/isValidSession"]) {
     next("/home");
   } else {
     next();

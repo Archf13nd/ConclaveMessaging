@@ -1,10 +1,18 @@
 <template>
   <div>
     <sign-up-modal
-      v-if="!userLoggedIn && timePassed && !existingUser"
+      v-if="
+        (!userLoggedIn && timePassed && !existingUser && !activeModal) ||
+        activeModal === 'signup'
+      "
+      @changeModal="changeModal"
     ></sign-up-modal>
     <sign-in-modal
-      v-if="!userLoggedIn && timePassed && existingUser"
+      v-if="
+        (!userLoggedIn && timePassed && existingUser && !activeModal) ||
+        activeModal === 'signin'
+      "
+      @changeModal="changeModal"
     ></sign-in-modal>
     <the-header></the-header>
     <router-view :class="{ blur: !timePassed }"></router-view>
@@ -27,7 +35,15 @@ export default {
     return {
       timePassed: false,
       existingUser: false,
+      activeModal: "",
     };
+  },
+  methods: {
+    changeModal(e) {
+      console.log(e);
+      this.activeModal = e;
+      console.log(this.activeModal);
+    },
   },
   computed: {
     userLoggedIn() {

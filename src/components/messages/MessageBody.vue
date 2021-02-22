@@ -13,7 +13,7 @@ export default {
   props: ["userId", "content", "messageId"],
   methods: {
     editMessage() {
-      alert(this.userId);
+      alert("Edit message feature coming soon!");
     },
     deleteMessage() {
       this.$emit("deleteMessage");

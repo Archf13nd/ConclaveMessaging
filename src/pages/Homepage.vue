@@ -40,8 +40,8 @@ export default {
     this.fetchMessages();
   },
   updated() {
-    const cHeight = this.$refs.death.childNodes[1].scrollHeight;
-    this.$refs.death.childNodes[1].scrollTop = cHeight;
+    const cHeight = this.$refs.death.childNodes[0].scrollHeight;
+    this.$refs.death.childNodes[0].scrollTop = cHeight;
   },
   methods: {
     async fetchMessages() {
@@ -123,6 +123,6 @@ export default {
 }
 
 .message-body:last-child {
-  margin-bottom: 88px;
+  margin-bottom: 15rem;
 }
 </style>

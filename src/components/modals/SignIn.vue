@@ -39,9 +39,7 @@
         </button>
       </form>
       <h3 class="text-link">
-        <router-link to="home"
-          >Don't have an account? Sign up instead!</router-link
-        >
+        <p @click="changeModal">Don't have an account? Sign up instead!</p>
       </h3>
     </div>
   </div>
@@ -73,6 +71,9 @@ export default {
         e.target.value.length < 6 || !/\d/.test(e.target.value);
       this.passwordClicked = true;
     },
+    changeModal() {
+      this.$emit("changeModal", "signup");
+    },
     submitForm() {
       this.$store.dispatch("auth/signIn", {
         email: this.email,
@@ -86,6 +87,11 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/_form-styles.scss";
 
+.text-link:hover {
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
 .form-container--modal {
   background: rgb(255, 255, 255);
   grid-column: 4 / span 6;
@@ -93,7 +99,7 @@ export default {
   flex-direction: column;
   // align-items: center;
   display: grid;
-  grid-template: 12rem 60rem min-content minmax(100px, 128px) 100px / repeat(
+  grid-template: 12rem 55rem min-content minmax(100px, 128px) 100px / repeat(
       6,
       1fr
     );

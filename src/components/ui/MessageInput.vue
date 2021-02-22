@@ -51,6 +51,12 @@ export default {
   width: 112px;
   border: none;
   border-radius: 0 8px 8px 0;
+
+  &:hover {
+    background: #77f33d;
+    transform: translateY(-3px);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 }
 
 .message-input-form {
@@ -67,9 +73,10 @@ export default {
 input {
   border: none;
   height: 100%;
-  width: 85%;
+  width: 95%;
   margin-right: 10px;
   background: transparent;
+  font-size: 2rem;
 }
 input:focus {
   outline: none;
