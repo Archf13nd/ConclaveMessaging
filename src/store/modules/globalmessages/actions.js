@@ -22,7 +22,7 @@ export default {
       };
 
       const response = await fetch(
-        `${FIREBASE_URL}globalmessages.json`, //todo
+        `${FIREBASE_URL}globalmessages.json?auth=${token}`, //todo
         {
           method: "POST",
           body: JSON.stringify(messageObject),
@@ -61,7 +61,7 @@ export default {
   },
   async deleteMessage(context, { messageId }) {
     const deleteResponse = await fetch(
-      `https://message-app-72e27-default-rtdb.europe-west1.firebasedatabase.app/globalmessages/${messageId}.json`,
+      `https://message-app-72e27-default-rtdb.europe-west1.firebasedatabase.app/globalmessages/${messageId}.json?auth=${token}`,
       {
         method: "DELETE",
       }

@@ -13,18 +13,19 @@ const router = createRouter({
     {
       path: "/settings",
       component: Settings,
+      meta: { requiresAuth: true },
       redirect: "/settings/details",
       props: true,
       children: [
         {
           path: "details",
           component: ChangeDetails,
-          meta: { requiresAuth: false }, //todo Set up authentication again
+          meta: { requiresAuth: true }, //todo Set up authentication again
         },
         {
           path: "deletedata",
           component: DeleteData,
-          meta: { requiresAuth: false },
+          meta: { requiresAuth: true },
         },
       ],
     },

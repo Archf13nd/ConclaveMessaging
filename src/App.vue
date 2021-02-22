@@ -36,7 +36,6 @@ export default {
   },
   created() {
     this.$store.dispatch("auth/autoSignIn");
-    console.log("app created");
     this.existingUser = localStorage.getItem("existingUser");
     setTimeout(() => {
       this.timePassed = true;

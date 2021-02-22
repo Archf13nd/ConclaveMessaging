@@ -136,8 +136,6 @@ export default {
         this.title = "Update Failed";
         this.titleColor = "#EB5757";
       }
-      console.log(email);
-      console.log(password);
     },
   },
   computed: {

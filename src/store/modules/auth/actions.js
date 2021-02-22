@@ -198,7 +198,6 @@ export default {
           body: JSON.stringify({ idToken: token }),
         }
       );
-      console.log(await response.json(), "hahaha");
       if (!response.ok) {
         const error = new Error(response);
         throw error;
