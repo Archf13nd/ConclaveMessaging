@@ -7,7 +7,7 @@
       v-if="!userLoggedIn && timePassed && existingUser"
     ></sign-in-modal>
     <the-header></the-header>
-    <router-view></router-view>
+    <router-view :class="{ blur: !timePassed }"></router-view>
   </div>
 </template>
 
@@ -40,7 +40,10 @@ export default {
     this.existingUser = localStorage.getItem("existingUser");
     setTimeout(() => {
       this.timePassed = true;
-    }, 500);
+    }, 300);
+  },
+  updated() {
+    this.existingUser = JSON.parse(localStorage.getItem("existingUser"));
   },
 };
 </script>
@@ -52,6 +55,10 @@ export default {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
+}
+
+.blur {
+  filter: blur(5px);
 }
 
 html {

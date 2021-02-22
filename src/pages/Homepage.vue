@@ -5,7 +5,8 @@
       <message-body
         class="message-body"
         v-for="message in arrayOfMessages"
-        :key="message.userId"
+        :key="message.messageId"
+        :userId="message.userId"
         :username="message.username"
         :avatar="message.avatar"
         :date="message.date"
@@ -37,9 +38,6 @@ export default {
   },
   created() {
     this.fetchMessages();
-    if (!this.$store.getters["auth/checkUser"]) {
-      this.existingUser = false;
-    }
   },
   updated() {
     const cHeight = this.$refs.death.childNodes[1].scrollHeight;

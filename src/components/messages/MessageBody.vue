@@ -1,6 +1,6 @@
 <template>
-  <div class="message-body">
-    <p class="message-text" contenteditable="true">{{ content }}</p>
+  <div class="message-body" :class="{ 'show-body': isUserMessage }">
+    <p class="message-text">{{ content }}</p>
     <div class="options">
       <div class="options--edit" @click="editMessage">E</div>
       <div class="options--delete" @click="deleteMessage">X</div>
@@ -10,13 +10,18 @@
 
 <script>
 export default {
-  props: ["content", "messageId"],
+  props: ["userId", "content", "messageId"],
   methods: {
     editMessage() {
-      alert("Please implement this");
+      alert(this.userId);
     },
     deleteMessage() {
       this.$emit("deleteMessage");
+    },
+  },
+  computed: {
+    isUserMessage() {
+      return this.$store.getters["auth/getUserDetails"].userId === this.userId;
     },
   },
 };
@@ -46,7 +51,7 @@ p {
   min-height: 16px;
 }
 
-.message-body:hover .options {
+.show-body:hover .options {
   display: flex;
 }
 

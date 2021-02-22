@@ -39,7 +39,9 @@
         </button>
       </form>
       <h3 class="text-link">
-        <router-link to="home">Create a guest profile instead?</router-link>
+        <router-link to="home"
+          >Don't have an account? Sign up instead!</router-link
+        >
       </h3>
     </div>
   </div>

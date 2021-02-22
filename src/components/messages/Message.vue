@@ -4,6 +4,7 @@
       <avatar :username="username" :avatar="avatar" :date="date"></avatar>
     </div>
     <message-body
+      :userId="userId"
       :content="content"
       :messageId="messageId"
       @deleteMessage="deleteMessage"
@@ -15,7 +16,7 @@
 import MessageBody from "./MessageBody.vue";
 import Avatar from "./Avatar.vue";
 export default {
-  props: ["username", "avatar", "date", "content", "messageId"],
+  props: ["userId", "username", "avatar", "date", "content", "messageId"],
   components: {
     MessageBody,
     Avatar,

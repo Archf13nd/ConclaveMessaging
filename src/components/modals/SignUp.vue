@@ -83,7 +83,9 @@
         </button>
       </form>
       <h3 class="text-link">
-        <router-link to="home">Create a guest profile instead?</router-link>
+        <router-link to="home"
+          >Aleady have an account? Sign in instead!</router-link
+        >
       </h3>
     </div>
   </div>

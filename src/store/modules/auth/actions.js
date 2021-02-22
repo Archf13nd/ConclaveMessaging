@@ -26,7 +26,6 @@ export default {
         context.dispatch("fetchUserDetails");
         timeoutTimer = setTimeout(() => {
           context.dispatch("logout");
-          context.commit("validSession", false);
         }, timeRemaining);
       }
     }
@@ -199,7 +198,7 @@ export default {
           body: JSON.stringify({ idToken: token }),
         }
       );
-
+      console.log(await response.json(), "hahaha");
       if (!response.ok) {
         const error = new Error(response);
         throw error;
@@ -208,6 +207,6 @@ export default {
     localStorage.removeItem("token");
     localStorage.removeItem("expirationDate");
     context.commit("validSession", false);
-    localStorage.removeItem("existingUser");
+    localStorage.setItem("existingUser", false);
   },
 };

@@ -4,7 +4,11 @@
       <h1 class="form-title" :style="{ color: titleColor }">{{ title }}</h1>
       <div
         class="avatar"
-        :style="{ background: `center / contain url(${avatar})` }"
+        :style="{
+          background: `center / contain url(${
+            avatar || getUserDetails.avatar
+          })`,
+        }"
       ></div>
       <form class="input-fields" @submit.prevent="submitForm">
         <div class="input-container skew" :class="{ invalid: usernameInvalid }">
