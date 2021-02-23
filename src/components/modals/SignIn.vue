@@ -38,8 +38,11 @@
           <p class="reverse-skew button-text">Sign in</p>
         </button>
       </form>
-      <h3 class="text-link">
-        <p @click="changeModal">Don't have an account? Sign up instead!</p>
+      <h3 v-if="!errorMessage" @click="changeModal" class="text-link link">
+        Don't have an account? Sign up instead!
+      </h3>
+      <h3 v-else class="text-link error-message">
+        {{ errorMessage }}
       </h3>
     </div>
   </div>
@@ -59,6 +62,7 @@ export default {
       password: "",
       passwordInvalid: true,
       passwordClicked: false,
+      errorMessage: "",
     };
   },
   methods: {
@@ -74,11 +78,23 @@ export default {
     changeModal() {
       this.$emit("changeModal", "signup");
     },
-    submitForm() {
-      this.$store.dispatch("auth/signIn", {
-        email: this.email,
-        password: this.password,
-      });
+    async submitForm() {
+      try {
+        await this.$store.dispatch("auth/signIn", {
+          email: this.email,
+          password: this.password,
+        });
+      } catch (err) {
+        if (
+          (err.error && err.error.message === "EMAIL_NOT_FOUND") ||
+          (err.error && err.error.message === "INVALID_PASSWORD")
+        ) {
+          this.errorMessage = "Either your email or password was incorrect";
+        } else {
+          this.errorMessage =
+            "We're sorry. It seems the server is having an off day";
+        }
+      }
     },
   },
 };
@@ -87,9 +103,13 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/_form-styles.scss";
 
-.text-link:hover {
+.link:hover {
   transform: translateY(-3px);
   cursor: pointer;
+}
+
+.error-message {
+  color: crimson;
 }
 
 .form-container--modal {

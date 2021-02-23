@@ -20,12 +20,20 @@
         >
           <label class="reverse-skew" for="username">Username:</label>
           <div class="input-background">
+            <label
+              v-if="usernameInvalid && usernameClicked"
+              class="invalid-label reverse-skew"
+              for="avatar"
+              required
+              >Length must be less than 10 characters</label
+            >
             <input
               id="username"
               v-model="username"
               @blur="usernameValidation"
               class="reverse-skew"
               type="text"
+              placeholder="Length greater than 2 and less than 10"
               required
             />
           </div>
@@ -36,12 +44,20 @@
         >
           <label class="reverse-skew" for="avatar" required>Avatar:</label>
           <div class="input-background">
+            <label
+              v-if="avatarInvalid && avatarClicked"
+              class="invalid-label reverse-skew"
+              for="avatar"
+              required
+              >This URL type is not supported</label
+            >
             <input
               id="avatar"
               @focus="removeDefaultAvatar"
               @blur="avatarValidation"
               class="reverse-skew test"
               type="url"
+              placeholder="Paste an image url"
               required
             />
           </div>
@@ -58,6 +74,7 @@
               @blur="emailValidation"
               class="reverse-skew"
               type="email"
+              placeholder="Type in your email address"
               required
             />
           </div>
@@ -68,22 +85,33 @@
         >
           <label class="reverse-skew" for="password" required>Password:</label>
           <div class="input-background">
+            <label
+              v-if="passwordInvalid && passwordClicked"
+              class="invalid-label reverse-skew"
+              for="avatar"
+              required
+              >Not secure enough. Include a number</label
+            >
             <input
               id="password"
               v-model="password"
               @blur="passwordValidation"
               class="reverse-skew"
               type="password"
+              placeholder="Length > 6 and includes a number"
               required
             />
           </div>
         </div>
         <button type="submit" @click="checkInputs" class="submit-button skew">
-          <p class="reverse-skew button-text">Sign in</p>
+          <p class="reverse-skew button-text">Sign up!</p>
         </button>
       </form>
-      <h3 class="text-link">
-        <p @click="changeModal">Already have an account? Sign in instead!</p>
+      <h3 v-if="!errorMessage" @click="changeModal" class="text-link link">
+        Already have an account? Sign in instead!
+      </h3>
+      <h3 v-else class="text-link error-message">
+        {{ errorMessage }}
       </h3>
     </div>
   </div>
@@ -112,6 +140,7 @@ export default {
       emailClicked: false,
       passwordInvalid: true,
       passwordClicked: false,
+      errorMessage: "",
     };
   },
   methods: {
@@ -184,9 +213,14 @@ export default {
             password: this.password,
           });
         } catch (err) {
-          //todo Display to user that something went wrong
-          const error = new Error(err);
-          throw error;
+          console.log(err);
+          if (err.error && err.error.message === "EMAIL_EXISTS") {
+            this.errorMessage =
+              "We already have an account with that email address";
+          } else {
+            this.errorMessage =
+              "We are really sorry. Our server seems to be having problems";
+          }
         }
       }
     },
@@ -197,8 +231,22 @@ export default {
 <style lang="scss" scoped>
 @import "../../scss/_form-styles.scss";
 
-.text-link:hover {
+.link:hover {
   transform: translateY(-3px);
   cursor: pointer;
+}
+
+.error-message {
+  color: crimson;
+}
+
+.invalid-label {
+  font-size: 1.5rem;
+  margin-left: 0;
+  width: 200px;
+  position: absolute;
+  top: -15px;
+  color: crimson;
+  font-weight: bold;
 }
 </style>

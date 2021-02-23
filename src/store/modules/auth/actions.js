@@ -3,16 +3,10 @@ let timeoutTimer;
 export default {
   // Login Function - Takes in email and password as payload. Dispatches Auth action with payload.
   async signIn(context, payload) {
-    try {
-      context.dispatch("auth", {
-        ...payload,
-        mode: "login",
-      });
-      context.commit("validSession", true);
-    } catch (err) {
-      const error = new Error(err);
-      throw error;
-    }
+    return context.dispatch("auth", {
+      ...payload,
+      mode: "login",
+    });
   },
   autoSignIn(context) {
     const token = localStorage.getItem("token");
@@ -70,15 +64,15 @@ export default {
       }),
     });
 
-    // Error handling
-    if (!response.ok) {
-      const error = new Error("Error");
-      throw error;
-    }
-
     // Get response data. Will contain localID(userID) and secure idToken
     const responseData = await response.json();
 
+    // Error handling
+    if (!response.ok) {
+      throw responseData;
+    }
+
+    context.commit("validSession", true);
     // Store secure token in local Storage
     localStorage.setItem("token", responseData.idToken);
     // Set expiration time in local storage
