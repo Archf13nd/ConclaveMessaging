@@ -116,8 +116,6 @@ export default {
       avatar: responseData.users[0].photoUrl,
       userId: responseData.users[0].localId,
     });
-
-    // const userDetails = context.getters["getUserDetails"];
   },
   // Changes user details. Used on signup to add details or later on to change details if user is loggedIn.
   async updateUserProfile(context, { username, avatar }) {
