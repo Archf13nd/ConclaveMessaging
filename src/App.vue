@@ -3,14 +3,14 @@
     <sign-up-modal
       v-if="
         (!userLoggedIn && timePassed && !existingUser && !activeModal) ||
-        activeModal === 'signup'
+        (activeModal === 'signup' && !userLoggedIn)
       "
       @changeModal="changeModal"
     ></sign-up-modal>
     <sign-in-modal
       v-if="
         (!userLoggedIn && timePassed && existingUser && !activeModal) ||
-        activeModal === 'signin'
+        (activeModal === 'signin' && !userLoggedIn)
       "
       @changeModal="changeModal"
     ></sign-in-modal>
